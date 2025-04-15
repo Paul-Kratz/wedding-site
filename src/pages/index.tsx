@@ -3,9 +3,10 @@ import MainContent from "../components/MainContent";
 import classes from "./index.module.css";
 import { Section } from "@/components/Section/Section";
 import { Rsvp } from "@/components/RSVP/Rsvp";
-import { Button } from "react-bootstrap";
+import { SpotifyPlaylist } from "@/components/SpotifyPlaylist/SpotifyPlaylist";
 import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
-import { PLAYLIST_ID } from "@/constants/spotify";
+import Script from "next/script";
+
 export default function Home({
   playlist,
   accessToken,
@@ -13,17 +14,18 @@ export default function Home({
   playlist: unknown | null;
   accessToken: string;
 }) {
-  const refreshPlaylist = async () => {
-    const iframe = document.getElementById(
-      "spotify-iframe"
-    ) as HTMLIFrameElement | null;
-    if (iframe) {
-      iframe.src = iframe.src;
-    }
-  };
+  // const refreshPlaylist = async () => {
+  //   const iframe = document.getElementById(
+  //     "spotify-iframe"
+  //   ) as HTMLIFrameElement | null;
+  //   if (iframe) {
+  //     iframe.src = iframe.src;
+  //   }
+  // };
   console.log({ playlist, accessToken });
   return (
     <div className={classes.root}>
+      <Script src="https://open.spotify.com/embed/iframe-api/v1" async />
       <MainContent />
       <div className="container">
         <Section>
@@ -72,17 +74,7 @@ export default function Home({
           </div>
         </section>
         <Section title="Music">
-          <Button onClick={refreshPlaylist}>Refresh</Button>
-          <iframe
-            style={{ borderRadius: "12px", marginBottom: "1em" }}
-            src={`https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator`}
-            width="100%"
-            height="400px"
-            allowFullScreen={true}
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            id="spotify-iframe"
-            loading="eager"
-          ></iframe>
+          <SpotifyPlaylist />
         </Section>
       </div>
     </div>

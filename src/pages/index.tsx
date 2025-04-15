@@ -5,7 +5,13 @@ import { Section } from "@/components/Section/Section";
 import { Rsvp } from "@/components/RSVP/Rsvp";
 import { Button } from "react-bootstrap";
 import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
-export default function Home({ playlist, accessToken }: any) {
+export default function Home({
+  playlist,
+  accessToken,
+}: {
+  playlist: unknown | null;
+  accessToken: string;
+}) {
   const refreshPlaylist = async () => {
     const iframe = document.getElementById(
       "spotify-iframe"

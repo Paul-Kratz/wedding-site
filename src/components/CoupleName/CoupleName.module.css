@@ -1,0 +1,21 @@
+.title {
+  font-size: 3em;
+  text-align: center;
+  font-family: var(--font-petit-formal-script);
+}
+
+.date {
+  font-size: 1em;
+  text-align: center;
+  font-family: var(--font-petit-formal-script);
+}
+
+@media (min-width: 640px) {
+  .title {
+    font-size: 6em;
+  }
+
+  .date {
+    font-size: 2em;
+  }
+}

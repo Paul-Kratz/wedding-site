@@ -1,0 +1,17 @@
+body {
+  background-color: #567356;
+}
+
+.container {
+  max-width: 100%;
+  margin: 25px 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.textArea {
+  max-width: 640px;
+  text-align: center;
+  font-size: 1.2em;
+}

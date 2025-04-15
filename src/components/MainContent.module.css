@@ -1,0 +1,21 @@
+.container {
+  position: relative;
+  height: 80vh;
+}
+
+.innerContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+}

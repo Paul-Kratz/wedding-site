@@ -1,10 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-petit-formal: var(--font-petit-formal-script), cursive;
+  --font-montserrat: var(--font-montserrat), sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,5 +15,12 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.petit-formal-script {
+  font-family: var(--font-petit-formal);
+}
+
+.montserrat {
+  font-family: var(--font-montserrat);
 }

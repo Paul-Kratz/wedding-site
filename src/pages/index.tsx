@@ -1,114 +1,82 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
+import MainContent from "../components/MainContent";
+import classes from "./index.module.css";
+import { Section } from "@/components/Section/Section";
+import { Rsvp } from "@/components/RSVP/Rsvp";
+import { Button } from "react-bootstrap";
 export default function Home() {
+  const refreshPlaylist = () => {
+    const iframe = document.getElementById(
+      "spotify-iframe"
+    ) as HTMLIFrameElement | null;
+    if (iframe) {
+      iframe.src = iframe.src;
+    }
+  };
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div>
+      <MainContent />
+      <div className="container">
+        <Section>
+          <div className={classes.textArea}>
+            Welcome to our wedding website here you can see all the information
+            you might need to celebrate with us & RSVP. We love you all and we
+            cannot wait to share this day with you. <br /> <br />
+            Love Steph & Paul xx
+          </div>
+        </Section>
+        <Section title="Countdown to our wedding">
+          <CountdownTimer />
+        </Section>
+        <Section title="FAQs">
+          <p>This is some content</p>
+        </Section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <section className={classes.container}>
+          <div className={classes.textArea}>
+            <h2 className={classes.title}>RSVP</h2>
+            <Rsvp />
+          </div>
+        </section>
+        <section className={classes.container}>
+          <div className={classes.textArea}>
+            <h2 className={classes.title}>The Venue</h2>
+            <p className={classes.contactText}></p>
+          </div>
+        </section>
+        <section className={classes.container}>
+          <div className={classes.textArea}>
+            <h2 className={classes.title}>Accomodation</h2>
+            <p className={classes.contactText}></p>
+          </div>
+        </section>
+        <section className={classes.container}>
+          <div className={classes.textArea}>
+            <h2 className={classes.title}>Timeline</h2>
+            <p className={classes.contactText}></p>
+          </div>
+        </section>
+        <section className={classes.container}>
+          <div className={classes.textArea}>
+            <h2 className={classes.title}>Menu</h2>
+            <p className={classes.contactText}></p>
+          </div>
+        </section>
+        <Section title="Music">
+          <Button onClick={refreshPlaylist}>Refresh</Button>
+          <iframe
+            style={{ borderRadius: "12px", marginBottom: "1em" }}
+            src="https://open.spotify.com/embed/playlist/64mERjpY6FiXpnAmyIkpFD?utm_source=generator"
+            width="100%"
+            height="400px"
+            frameBorder="0"
+            allowFullScreen={true}
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            id="spotify-iframe"
+          ></iframe>
+        </Section>
+      </div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { Section } from "@/components/Section/Section";
 import { Rsvp } from "@/components/RSVP/Rsvp";
 import { Button } from "react-bootstrap";
 import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
+import { PLAYLIST_ID } from "@/constants/spotify";
 export default function Home({
   playlist,
   accessToken,
@@ -74,13 +75,11 @@ export default function Home({
           <Button onClick={refreshPlaylist}>Refresh</Button>
           <iframe
             style={{ borderRadius: "12px", marginBottom: "1em" }}
-            src="https://open.spotify.com/embed/playlist/64mERjpY6FiXpnAmyIkpFD?utm_source=generator"
+            src={`https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator`}
             width="100%"
             height="400px"
-            frameBorder="0"
             allowFullScreen={true}
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
             id="spotify-iframe"
           ></iframe>
         </Section>

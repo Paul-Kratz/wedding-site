@@ -81,6 +81,7 @@ export default function Home({
             allowFullScreen={true}
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             id="spotify-iframe"
+            loading="eager"
           ></iframe>
         </Section>
       </div>

@@ -4,8 +4,9 @@ import classes from "./index.module.css";
 import { Section } from "@/components/Section/Section";
 import { Rsvp } from "@/components/RSVP/Rsvp";
 import { Button } from "react-bootstrap";
-export default function Home() {
-  const refreshPlaylist = () => {
+import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
+export default function Home({ playlist, accessToken }: any) {
+  const refreshPlaylist = async () => {
     const iframe = document.getElementById(
       "spotify-iframe"
     ) as HTMLIFrameElement | null;
@@ -13,8 +14,9 @@ export default function Home() {
       iframe.src = iframe.src;
     }
   };
+  console.log({ playlist, accessToken });
   return (
-    <div>
+    <div className={classes.root}>
       <MainContent />
       <div className="container">
         <Section>
@@ -80,3 +82,14 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const accessToken = await getSpotifyAccessToken();
+  const playlist = await getSpotifyPlaylist({ accessToken });
+  return {
+    props: {
+      playlist,
+      accessToken,
+    },
+  };
+};

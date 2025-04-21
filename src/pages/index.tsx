@@ -7,6 +7,7 @@ import { SpotifyPlaylist } from "@/components/SpotifyPlaylist/SpotifyPlaylist";
 import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
 import Script from "next/script";
 import { FAQItems } from "@/components/FAQ/FAQItems";
+import { TimelineSection } from "@/components/Timeline/Timeline";
 
 export default function Home({
   playlist,
@@ -58,12 +59,9 @@ export default function Home({
             <p className={classes.contactText}></p>
           </div>
         </section>
-        <section className={classes.container}>
-          <div className={classes.textArea}>
-            <h2 className={classes.title}>Timeline</h2>
-            <p className={classes.contactText}></p>
-          </div>
-        </section>
+        <Section title="Timeline">
+          <TimelineSection />
+        </Section>
         <section className={classes.container}>
           <div className={classes.textArea}>
             <h2 className={classes.title}>Menu</h2>

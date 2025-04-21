@@ -6,6 +6,7 @@ import { Rsvp } from "@/components/RSVP/Rsvp";
 import { SpotifyPlaylist } from "@/components/SpotifyPlaylist/SpotifyPlaylist";
 import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
 import Script from "next/script";
+import { FAQItems } from "@/components/FAQ/FAQItems";
 
 export default function Home({
   playlist,
@@ -40,15 +41,11 @@ export default function Home({
           <CountdownTimer />
         </Section>
         <Section title="FAQs">
-          <p>This is some content</p>
+          <FAQItems />
         </Section>
-
-        <section className={classes.container}>
-          <div className={classes.textArea}>
-            <h2 className={classes.title}>RSVP</h2>
-            <Rsvp />
-          </div>
-        </section>
+        <Section title="RSVP">
+          <Rsvp />
+        </Section>
         <section className={classes.container}>
           <div className={classes.textArea}>
             <h2 className={classes.title}>The Venue</h2>

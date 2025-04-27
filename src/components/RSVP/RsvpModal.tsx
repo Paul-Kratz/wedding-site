@@ -68,7 +68,20 @@ export const RsvpModal = ({
       date: new Date().toISOString(),
       dietaryRestrictions: dietaryRestrictionsWithOther,
     };
+
+    const message = {
+      to: "+3530862040052",
+      body: `RSVP from ${names} - ${
+        isAttending ? "Will be there" : "Can't make it"
+      }${
+        dietaryRestrictionsWithOther.length > 0
+          ? `\nDietary Restrictions: ${dietaryRestrictionsWithOther.join(", ")}`
+          : ""
+      }`,
+    };
+
     await addDoc(collection(db, "rsvp"), data);
+    await addDoc(collection(db, "messages"), message);
     handleClose();
   };
   return (

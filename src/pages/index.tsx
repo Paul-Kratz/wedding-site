@@ -9,6 +9,7 @@ import Script from "next/script";
 import { FAQItems } from "@/components/FAQ/FAQItems";
 import { TimelineSection } from "@/components/Timeline/Timeline";
 import Head from "next/head";
+import { Venue } from "@/components/Venue/Venue";
 
 export default function Home({
   playlist,
@@ -75,27 +76,13 @@ export default function Home({
           <Section title="RSVP">
             <Rsvp />
           </Section>
-          <section className={classes.container}>
-            <div className={classes.textArea}>
-              <h2 className={classes.title}>The Venue</h2>
-              <p className={classes.contactText}></p>
-            </div>
-          </section>
-          <section className={classes.container}>
-            <div className={classes.textArea}>
-              <h2 className={classes.title}>Accomodation</h2>
-              <p className={classes.contactText}></p>
-            </div>
-          </section>
+          <Section title="The Venue">
+            <Venue />
+          </Section>
           <Section title="Timeline">
             <TimelineSection />
           </Section>
-          <section className={classes.container}>
-            <div className={classes.textArea}>
-              <h2 className={classes.title}>Menu</h2>
-              <p className={classes.contactText}></p>
-            </div>
-          </section>
+          <Section title="Menu">To come</Section>
           <Section title="Music">
             <SpotifyPlaylist />
           </Section>

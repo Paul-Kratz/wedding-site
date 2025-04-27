@@ -1,6 +1,5 @@
 import { RsvpModal } from "@/components/RSVP/RsvpModal";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
 
 export const Rsvp = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -8,7 +7,9 @@ export const Rsvp = () => {
   const handleShow = () => setModalOpen(true);
   return (
     <>
-      <Button onClick={handleShow}>Are you in?</Button>
+      <button className="buttonStyle" onClick={handleShow}>
+        Are you in?
+      </button>
       {modalOpen && <RsvpModal handleClose={handleClose} show={modalOpen} />}
     </>
   );

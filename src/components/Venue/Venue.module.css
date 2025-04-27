@@ -1,0 +1,44 @@
+.venueRow {
+  margin-bottom: 1rem;
+  max-width: 100%;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.venueImageCol {
+  position: relative;
+  height: 300px;
+}
+
+.venueInfoCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.venueTitle {
+  margin-bottom: 1rem;
+}
+
+.venueMap {
+  border: 0;
+}
+
+@media (max-width: 576px) {
+  .venueRow {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .venueImageCol,
+  .venueInfoCol {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

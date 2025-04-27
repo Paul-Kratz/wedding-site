@@ -42,17 +42,17 @@ const CountdownTimer = () => {
           <span className={styles.timerValue}>{timeLeft.days}</span>
           <p className={styles.timerSubtitle}>Days</p>
         </div>
-        <span>:</span>
+        <span className={styles.separator}>:</span>
         <div className={styles.timerItem}>
           <span className={styles.timerValue}>{timeLeft.hours}</span>
           <p className={styles.timerSubtitle}>Hours</p>
         </div>
-        <span>:</span>
+        <span className={styles.separator}>:</span>
         <div className={styles.timerItem}>
           <span className={styles.timerValue}>{timeLeft.minutes}</span>
           <p className={styles.timerSubtitle}>Minutes</p>
         </div>
-        <span>:</span>
+        <span className={styles.separator}>:</span>
         <div className={styles.timerItem}>
           <span className={styles.timerValue}>{timeLeft.seconds}</span>
           <p className={styles.timerSubtitle}>Seconds</p>

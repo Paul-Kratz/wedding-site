@@ -3,3 +3,32 @@
   border: none;
   color: white;
 }
+
+.modalHeader {
+  border-bottom: none;
+}
+
+.modalTitle {
+  color: #567356;
+}
+
+.dietaryLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.dietaryIcon {
+  cursor: pointer;
+}
+
+.dietaryOptionLabel {
+  font-size: 0.75rem;
+}
+
+/* .modalBody {
+  background-color: #567356;
+  border-bottom: none;
+  color: "white";
+} */

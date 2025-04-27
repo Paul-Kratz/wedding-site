@@ -25,3 +25,7 @@
   font-size: 0.875rem;
   font-family: var(--font-petit-formal-script);
 }
+
+.separator {
+  padding-top: 20px;
+}

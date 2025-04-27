@@ -4,8 +4,10 @@ import {
   TimelineContent,
   TimelineDot,
   TimelineItem,
+  timelineItemClasses,
   TimelineSeparator,
 } from "@mui/lab";
+import { useMediaQuery } from "@mui/material";
 import { Container } from "react-bootstrap";
 
 const timelineData = [
@@ -51,9 +53,20 @@ const timelineData = [
   },
 ];
 export const TimelineSection = () => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
   return (
     <Container>
-      <Timeline position="alternate">
+      <Timeline
+        position={isMobile ? "right" : "alternate"}
+        sx={{
+          [`& .${timelineItemClasses.root}:before`]: {
+            ...(isMobile && {
+              flex: 0,
+              padding: 0,
+            }),
+          },
+        }}
+      >
         {timelineData.map((item) => (
           <TimelineItem key={item.title}>
             <TimelineSeparator>

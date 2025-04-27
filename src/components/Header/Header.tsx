@@ -1,15 +1,7 @@
 import React from "react";
 import styles from "./Header.module.css";
 
-const items = [
-  "FAQs",
-  "RSVP",
-  "The Venue",
-  "Accomodation",
-  "Timeline",
-  "Menu",
-  "Music",
-];
+const items = ["FAQs", "RSVP", "The Venue", "Timeline", "Menu", "Music"];
 
 const Header: React.FC = () => {
   return (

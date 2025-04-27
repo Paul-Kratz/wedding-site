@@ -24,3 +24,40 @@ body {
 .montserrat {
   font-family: var(--font-montserrat);
 }
+
+.buttonStyle {
+  color: #567356;
+  background-color: white;
+  border: 1px solid #567356;
+  padding: 10px 20px;
+  border-radius: 0px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.buttonStyle:hover,
+.buttonStyle:focus,
+.buttonStyle:active {
+  background-image: linear-gradient(rgb(0 0 0/5%) 0 0);
+  background-color: white;
+  border: 1px solid #567356;
+  color: #567356;
+}
+
+.buttonStyleFilled {
+  color: white;
+  background-color: #567356;
+  border: 1px solid #567356;
+  padding: 10px 20px;
+  border-radius: 0px;
+  cursor: pointer;
+}
+.buttonStyleFilled:hover {
+  background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
+  background-color: #567356;
+  border: 1px solid #567356;
+}
+.buttonStyleFilled:focus {
+  background-color: white;
+  color: #567356;
+  border: 1px solid #567356;
+}

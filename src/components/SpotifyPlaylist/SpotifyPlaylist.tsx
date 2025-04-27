@@ -31,5 +31,5 @@ export const SpotifyPlaylist = () => {
     };
   }, []);
 
-  return <div id="spotify-playlist"></div>;
+  return <div id="spotify-playlist" style={{ marginBottom: "3rem" }}></div>;
 };

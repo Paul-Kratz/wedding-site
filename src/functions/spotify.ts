@@ -41,3 +41,26 @@ export const getSpotifyPlaylist = async ({
   const data = await response.json();
   return data;
 };
+
+export const getSpotifySearchResults = async ({
+  searchTerm,
+  accessToken,
+}: {
+  searchTerm: string;
+  accessToken: string;
+}) => {
+  const url = `https://api.spotify.com/v1/search?q=${searchTerm}&type=track&limit=10`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    console.log(await response);
+    throw new Error("Failed to fetch search results");
+  }
+  const data = await response.json();
+  return data;
+};

@@ -10,7 +10,7 @@ export const Rsvp = () => {
       <button className="buttonStyle" onClick={handleShow}>
         Are you in?
       </button>
-      {modalOpen && <RsvpModal handleClose={handleClose} show={modalOpen} />}
+      <RsvpModal handleClose={handleClose} show={modalOpen} />
     </>
   );
 };

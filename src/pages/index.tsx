@@ -3,30 +3,15 @@ import MainContent from "../components/MainContent";
 import classes from "./index.module.css";
 import { Section } from "@/components/Section/Section";
 import { Rsvp } from "@/components/RSVP/Rsvp";
-import { SpotifyPlaylist } from "@/components/SpotifyPlaylist/SpotifyPlaylist";
-import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
 import Script from "next/script";
 import { FAQItems } from "@/components/FAQ/FAQItems";
 import { TimelineSection } from "@/components/Timeline/Timeline";
 import Head from "next/head";
 import { Venue } from "@/components/Venue/Venue";
+import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
+import { Typography } from "@mui/material";
 
-export default function Home({
-  playlist,
-  accessToken,
-}: {
-  playlist: unknown | null;
-  accessToken: string;
-}) {
-  // const refreshPlaylist = async () => {
-  //   const iframe = document.getElementById(
-  //     "spotify-iframe"
-  //   ) as HTMLIFrameElement | null;
-  //   if (iframe) {
-  //     iframe.src = iframe.src;
-  //   }
-  // };
-  console.log({ playlist, accessToken });
+export default function Home({ playlist }: { playlist: any }) {
   return (
     <>
       <Head>
@@ -70,11 +55,11 @@ export default function Home({
           <Section title="Countdown to our wedding">
             <CountdownTimer />
           </Section>
-          <Section title="FAQs">
-            <FAQItems />
-          </Section>
           <Section title="RSVP">
             <Rsvp />
+          </Section>
+          <Section title="FAQs">
+            <FAQItems />
           </Section>
           <Section title="The Venue">
             <Venue />
@@ -82,9 +67,13 @@ export default function Home({
           <Section title="Timeline">
             <TimelineSection />
           </Section>
-          <Section title="Menu">To come</Section>
           <Section title="Music">
-            <SpotifyPlaylist />
+            <Typography
+              variant="h5"
+              style={{ fontFamily: "var(--font-petit-formal-script)" }}
+            >
+              Coming soon
+            </Typography>
           </Section>
         </div>
       </div>
@@ -98,7 +87,6 @@ export const getServerSideProps = async () => {
   return {
     props: {
       playlist,
-      accessToken,
     },
   };
 };

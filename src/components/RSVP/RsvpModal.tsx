@@ -1,4 +1,4 @@
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import styles from "./RsvpModal.module.css";
 import { useState } from "react";
 import { getFirestore, addDoc, collection } from "firebase/firestore";
@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import app from "../../utils/firebase";
 import {
+  Alert,
   Box,
   Checkbox,
   Collapse,
@@ -13,6 +14,7 @@ import {
   FormControlLabel,
   FormLabel,
   RadioGroup,
+  Snackbar,
   TextField,
   ThemeProvider,
   Typography,
@@ -39,6 +41,8 @@ export const RsvpModal = ({
   const [dietaryRestriction, setDietaryRestriction] = useState<string[]>([]);
   const [otherSelected, setOtherSelected] = useState(false);
   const [otherText, setOtherText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
   const handleOtherSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
     setOtherSelected(checked);
@@ -55,13 +59,17 @@ export const RsvpModal = ({
     }
   };
   const handleRsvp = async (isAttending: boolean) => {
-    const db = getFirestore(app);
+    setIsLoading(true);
 
     const dietaryRestrictionsWithOther = [
       ...dietaryRestriction,
       ...(otherSelected && otherText ? [otherText] : []),
     ];
 
+    if (!names) {
+      setIsLoading(false);
+      return;
+    }
     const data = {
       name: names,
       attending: isAttending,
@@ -79,102 +87,146 @@ export const RsvpModal = ({
           : ""
       }`,
     };
+    try {
+      const db = getFirestore(app);
+      await addDoc(collection(db, "rsvp"), data);
+      await addDoc(collection(db, "messages"), message);
+      localStorage.setItem("rsvp", JSON.stringify(data));
+      setIsLoading(false);
+      setResult("success");
+      handleClose();
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      setResult("error");
+    }
+  };
 
-    await addDoc(collection(db, "rsvp"), data);
-    await addDoc(collection(db, "messages"), message);
-    handleClose();
+  const handleCloseSnackbar = () => {
+    setResult(null);
   };
   return (
-    <Modal show={show} onHide={handleClose} size="lg" centered>
-      <Modal.Header
-        closeButton
-        className={styles.modalHeader}
-        closeLabel="Close"
-      >
-        <Modal.Title className={styles.modalTitle}>
-          Can we expect to see you on our wedding day?
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className={styles.modalBody}>
-        <ThemeProvider theme={customTheme}>
-          <Box display={"flex"} flexDirection="column" gap={2}>
-            <TextField
-              label="What is your name(s)?"
-              variant="standard"
-              onChange={(e) => setNames(e.target.value)}
-            />
-            <FormControl>
-              <FormLabel>
-                <Typography
-                  className={styles.dietaryLabel}
-                  onClick={() => setExpanded(!expanded)}
-                >
-                  <span>Dietary Restrictions (Optional)</span>
-                  {expanded ? (
-                    <KeyboardArrowUpIcon
-                      className={styles.dietaryIcon}
-                      fontSize="large"
-                    />
-                  ) : (
-                    <KeyboardArrowDownIcon
-                      className={styles.dietaryIcon}
-                      fontSize="large"
-                    />
-                  )}
-                </Typography>
-              </FormLabel>
-              <Collapse in={expanded}>
-                <RadioGroup defaultValue="none" name="radio-buttons-group">
-                  {dietaryRestrictions.map((restriction) => (
+    <>
+      <Modal show={show} onHide={handleClose} size="lg" centered>
+        <Modal.Header
+          closeButton
+          className={styles.modalHeader}
+          closeLabel="Close"
+        >
+          <Modal.Title className={styles.modalTitle}>
+            Can we expect to see you on our wedding day?
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={styles.modalBody}>
+          {result === "error" && (
+            <Alert severity="error">
+              Sorry, something went wrong! Please try again.
+            </Alert>
+          )}
+          <ThemeProvider theme={customTheme}>
+            <Box display={"flex"} flexDirection="column" gap={2}>
+              <TextField
+                label="What is your name(s)?"
+                variant="standard"
+                required
+                onChange={(e) => setNames(e.target.value)}
+              />
+              <FormControl>
+                <FormLabel>
+                  <Typography
+                    className={styles.dietaryLabel}
+                    onClick={() => setExpanded(!expanded)}
+                  >
+                    <span>Dietary Restrictions (Optional)</span>
+                    {expanded ? (
+                      <KeyboardArrowUpIcon
+                        className={styles.dietaryIcon}
+                        fontSize="large"
+                      />
+                    ) : (
+                      <KeyboardArrowDownIcon
+                        className={styles.dietaryIcon}
+                        fontSize="large"
+                      />
+                    )}
+                  </Typography>
+                </FormLabel>
+                <Collapse in={expanded}>
+                  <RadioGroup defaultValue="none" name="radio-buttons-group">
+                    {dietaryRestrictions.map((restriction) => (
+                      <FormControlLabel
+                        key={restriction.toLowerCase()}
+                        value={restriction}
+                        control={
+                          <Checkbox
+                            onChange={handleCheckboxChange}
+                            size="small"
+                          />
+                        }
+                        label={
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            className={styles.dietaryOptionLabel}
+                          >
+                            {restriction}
+                          </Typography>
+                        }
+                      />
+                    ))}
                     <FormControlLabel
-                      key={restriction.toLowerCase()}
-                      value={restriction}
+                      value="other"
                       control={
-                        <Checkbox
-                          onChange={handleCheckboxChange}
-                          size="small"
-                        />
+                        <Checkbox onChange={handleOtherSelected} size="small" />
                       }
                       label={
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          className={styles.dietaryOptionLabel}
-                        >
-                          {restriction}
-                        </Typography>
+                        <TextField
+                          label="Other"
+                          variant="standard"
+                          size="small"
+                          onChange={(e) => setOtherText(e.target.value)}
+                          disabled={!otherSelected}
+                        />
                       }
                     />
-                  ))}
-                  <FormControlLabel
-                    value="other"
-                    control={
-                      <Checkbox onChange={handleOtherSelected} size="small" />
-                    }
-                    label={
-                      <TextField
-                        label="Other"
-                        variant="standard"
-                        size="small"
-                        onChange={(e) => setOtherText(e.target.value)}
-                        disabled={!otherSelected}
-                      />
-                    }
-                  />
-                </RadioGroup>
-              </Collapse>
-            </FormControl>
-          </Box>
-        </ThemeProvider>
-      </Modal.Body>
-      <Modal.Footer className={styles.modalFooter}>
-        <Button className="buttonStyle" onClick={() => handleRsvp(false)}>
-          Can&apos;t make it
-        </Button>
-        <Button className="buttonStyleFilled" onClick={() => handleRsvp(true)}>
-          Will be there
-        </Button>
-      </Modal.Footer>
-    </Modal>
+                  </RadioGroup>
+                </Collapse>
+              </FormControl>
+            </Box>
+          </ThemeProvider>
+        </Modal.Body>
+        <Modal.Footer className={styles.modalFooter}>
+          <button
+            className="buttonStyle"
+            onClick={() => handleRsvp(false)}
+            disabled={isLoading}
+          >
+            Can&apos;t make it
+          </button>
+          <button
+            className="buttonStyleFilled"
+            onClick={() => handleRsvp(true)}
+            disabled={isLoading}
+          >
+            Will be there
+          </button>
+        </Modal.Footer>
+      </Modal>
+      <Snackbar
+        open={result === "success"}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Thank you for your RSVP!
+        </Alert>
+      </Snackbar>
+    </>
   );
 };

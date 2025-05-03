@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Header.module.css";
 
-const items = ["FAQs", "RSVP", "The Venue", "Timeline", "Menu", "Music"];
+const items = ["RSVP", "FAQs", "The Venue", "Timeline", "Music"];
 
 const Header: React.FC = () => {
   return (

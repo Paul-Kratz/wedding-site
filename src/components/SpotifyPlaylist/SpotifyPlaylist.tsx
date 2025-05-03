@@ -23,7 +23,7 @@ declare global {
     }) => void;
   }
 }
-type PlaylistItem = {
+export type PlaylistItem = {
   added_at: string;
   added_by: {
     id: string;
@@ -63,12 +63,11 @@ type PlaylistItem = {
     href?: string;
     id?: string;
     name?: string;
-    preview_url?: any | null | undefined;
     type?: "track" | "episode";
     uri?: "spotify" | "spotify";
   };
 };
-type SpotifyPlaylist = {
+export type SpotifyPlaylist = {
   collaborative: boolean;
   description: string;
   external_urls: {
@@ -104,7 +103,11 @@ type SpotifyPlaylist = {
   uri: string;
 };
 
-export const SpotifyPlaylist = ({ playlist }: { playlist: any }) => {
+export const SpotifyPlaylist = ({
+  playlist,
+}: {
+  playlist: SpotifyPlaylist;
+}) => {
   useEffect(() => {
     const element = document.getElementById("spotify-playlist");
 
@@ -121,7 +124,6 @@ export const SpotifyPlaylist = ({ playlist }: { playlist: any }) => {
       );
     };
   }, []);
-  console.log({ playlist });
   function formatDuration(duration_ms: number): import("react").ReactNode {
     const minutes = Math.floor(duration_ms / 60000);
     const seconds = Math.floor((duration_ms % 60000) / 1000);
@@ -151,6 +153,7 @@ export const SpotifyPlaylist = ({ playlist }: { playlist: any }) => {
               </TableCell>
               <TableCell>
                 <Box display={"flex"} flexDirection="row" ml={2}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={row.track.album.images[0].url}
                     alt={row.track.album.name}

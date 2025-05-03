@@ -11,7 +11,7 @@ import { Venue } from "@/components/Venue/Venue";
 import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
 import { Typography } from "@mui/material";
 
-export default function Home({ playlist }: { playlist: any }) {
+export default function Home() {
   return (
     <>
       <Head>

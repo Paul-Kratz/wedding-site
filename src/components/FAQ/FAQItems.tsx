@@ -1,6 +1,6 @@
 import { FAQItem } from "@/components/FAQ/FAQItem";
 import type { FAQItemType } from "@/components/FAQ/types";
-import { Container, Row } from "react-bootstrap";
+import { Container, Grid } from "@mui/material";
 
 export const FAQItems = () => {
   const items: FAQItemType[] = [
@@ -84,12 +84,12 @@ export const FAQItems = () => {
   ];
 
   return (
-    <Container>
-      <Row>
+    <Container maxWidth="md">
+      <Grid container spacing={2}>
         {items.map((item) => (
           <FAQItem key={item.id} item={item} />
         ))}
-      </Row>
+      </Grid>
     </Container>
   );
 };

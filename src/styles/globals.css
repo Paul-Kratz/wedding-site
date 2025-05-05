@@ -1,7 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-petit-formal: var(--font-petit-formal-script), cursive;
+  --font-playfair-display: var(--font-playfair-display), italic;
   --font-montserrat: var(--font-montserrat), sans-serif;
 }
 
@@ -17,8 +17,8 @@ body {
   background: var(--background);
 }
 
-.petit-formal-script {
-  font-family: var(--font-petit-formal);
+.playfair-display {
+  font-family: var(--font-playfair-display);
 }
 
 .montserrat {

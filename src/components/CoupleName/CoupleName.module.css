@@ -1,13 +1,13 @@
 .title {
   font-size: 3em;
   text-align: center;
-  font-family: var(--font-petit-formal-script);
+  font-family: var(--font-playfair-display);
 }
 
 .date {
   font-size: 2em;
   text-align: center;
-  font-family: var(--font-petit-formal-script);
+  font-family: var(--font-playfair-display);
 }
 
 @media (min-width: 640px) {

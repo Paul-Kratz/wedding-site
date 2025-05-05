@@ -9,9 +9,13 @@ import { TimelineSection } from "@/components/Timeline/Timeline";
 import Head from "next/head";
 import { Venue } from "@/components/Venue/Venue";
 import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
-import { Typography } from "@mui/material";
+import { SpotifyPlaylist } from "@/components/SpotifyPlaylist/SpotifyPlaylist";
 
-export default function Home() {
+export default function Home({
+  playlist,
+}: {
+  playlist: SpotifyApi.PlaylistObjectFull;
+}) {
   return (
     <>
       <Head>
@@ -52,28 +56,27 @@ export default function Home() {
               Love Steph & Paul xx
             </div>
           </Section>
-          <Section title="Countdown to our wedding">
+          <Section id="countdown" title="Countdown to our wedding">
             <CountdownTimer />
           </Section>
-          <Section title="RSVP">
+          <Section id="rsvp" title="RSVP">
             <Rsvp />
           </Section>
-          <Section title="FAQs">
+          <Section id="faqs" title="FAQs">
             <FAQItems />
           </Section>
-          <Section title="The Venue">
+          <Section id="the venue" title="The Venue">
             <Venue />
           </Section>
-          <Section title="Timeline">
+          <Section id="timeline" title="Timeline">
             <TimelineSection />
           </Section>
-          <Section title="Music">
-            <Typography
-              variant="h5"
-              style={{ fontFamily: "var(--font-petit-formal-script)" }}
-            >
-              Coming soon
-            </Typography>
+          <Section
+            id="music"
+            title="Our Wedding Playlist"
+            subtitle="We would love to hear your suggestions for our wedding playlist!"
+          >
+            <SpotifyPlaylist playlist={playlist} />
           </Section>
         </div>
       </div>

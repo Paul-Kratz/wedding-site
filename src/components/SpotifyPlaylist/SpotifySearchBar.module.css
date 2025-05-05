@@ -1,0 +1,74 @@
+.input {
+  background-color: white;
+  border-color: white;
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
+  font-size: 1rem;
+  margin-left: 5px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.searchResults {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px #ddd;
+  z-index: 1;
+  color: black;
+  overflow-y: scroll;
+  max-height: 300px;
+}
+.resultImage {
+  margin-right: 1rem;
+}
+
+.resultItem {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trackDetails {
+  display: flex;
+  align-items: center;
+}
+
+.addButton {
+  color: white;
+  background-color: #567356;
+  border: 1px solid #567356;
+  padding: 5px 10px;
+  border-radius: 0px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+}
+.addButton:hover,
+.addButton:focus,
+.addButton:active {
+  background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
+  background-color: #567356;
+  border: 1px solid #567356;
+}
+
+.addButton:disabled {
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
+}

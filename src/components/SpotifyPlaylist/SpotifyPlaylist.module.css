@@ -1,0 +1,14 @@
+.titleText {
+  font-size: 1.2rem !important;
+  font-weight: bold;
+  color: white;
+}
+
+.rowText {
+  font-size: 1rem !important;
+  color: white;
+}
+.rowTextSmaller {
+  font-size: 0.8rem !important;
+  color: white;
+}

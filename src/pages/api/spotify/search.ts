@@ -2,9 +2,11 @@ import {
   getSpotifyAccessToken,
   getSpotifySearchResults,
 } from "@/functions/spotify";
-import type { Request, Response } from "express";
 
-const handler = async (req: Request, res: Response) => {
+
+import type { NextApiRequest, NextApiResponse } from "next";
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const { searchTerm } = req.query;
     if (typeof searchTerm !== "string") {

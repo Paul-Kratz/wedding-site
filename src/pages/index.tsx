@@ -3,7 +3,6 @@ import MainContent from "../components/MainContent";
 import classes from "./index.module.css";
 import { Section } from "@/components/Section/Section";
 import { Rsvp } from "@/components/RSVP/Rsvp";
-import Script from "next/script";
 import { FAQItems } from "@/components/FAQ/FAQItems";
 import { TimelineSection } from "@/components/Timeline/Timeline";
 import Head from "next/head";
@@ -12,10 +11,14 @@ import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
 import { SpotifyPlaylist } from "@/components/SpotifyPlaylist/SpotifyPlaylist";
 
 export default function Home({
-  playlist,
+  playlist = {} as SpotifyApi.PlaylistObjectFull,
 }: {
   playlist: SpotifyApi.PlaylistObjectFull;
 }) {
+  console.log(
+    "%cStop looking at the console. It's not going to help you!",
+    "color: #567356; font-size: 20px; font-weight: bold; font-family: 'Playfair Display', serif;"
+  );
   return (
     <>
       <Head>
@@ -44,7 +47,6 @@ export default function Home({
         <link rel="manifest" href="/site.webmanifest" />{" "}
       </Head>
       <div className={classes.root}>
-        <Script src="https://open.spotify.com/embed/iframe-api/v1" async />
         <MainContent />
         <div className="container">
           <Section>

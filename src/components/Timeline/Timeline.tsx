@@ -8,7 +8,7 @@ import {
   TimelineSeparator,
 } from "@mui/lab";
 import { useMediaQuery } from "@mui/material";
-import { Container } from "react-bootstrap";
+import { Container } from "@mui/material";
 
 const timelineData = [
   {
@@ -55,7 +55,7 @@ const timelineData = [
 export const TimelineSection = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   return (
-    <Container>
+    <Container maxWidth="md">
       <Timeline
         position={isMobile ? "right" : "alternate"}
         sx={{

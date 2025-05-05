@@ -2,7 +2,6 @@ import type { AppProps } from "next/app";
 import { Petit_Formal_Script, Montserrat } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
-import { useBootstrap } from "../utils/bootstrap";
 import { Analytics } from "@vercel/analytics/next";
 
 const petitFormalScript = Petit_Formal_Script({
@@ -17,7 +16,6 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 export default function App({ Component, pageProps }: AppProps) {
-  useBootstrap();
   return (
     <>
       <Analytics />

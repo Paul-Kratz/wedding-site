@@ -1,13 +1,13 @@
 import type { FAQItemType } from "@/components/FAQ/types";
-import { Col } from "react-bootstrap";
+import { Grid } from "@mui/material";
 
 export const FAQItem = ({ item }: { item: FAQItemType }) => {
   return (
-    <Col key={item.id} xs={12} md={6} className="mb-4">
+    <Grid size={{ sm: 12, md: 6 }} sx={{ mb: 4 }}>
       <h5 style={{ fontFamily: "var(--font-petit-formal-script)" }}>
         {item.question}
       </h5>
       <p>{item.answer}</p>
-    </Col>
+    </Grid>
   );
 };

@@ -1,4 +1,11 @@
-import { Modal } from "react-bootstrap";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import styles from "./RsvpModal.module.css";
 import { useState } from "react";
 import { getFirestore, addDoc, collection } from "firebase/firestore";
@@ -107,17 +114,22 @@ export const RsvpModal = ({
   };
   return (
     <>
-      <Modal show={show} onHide={handleClose} size="lg" centered>
-        <Modal.Header
-          closeButton
-          className={styles.modalHeader}
-          closeLabel="Close"
+      <Dialog open={show} onClose={handleClose} maxWidth="md" fullWidth>
+        <DialogTitle
+          className={styles.modalTitle}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderBottom: "none",
+          }}
         >
-          <Modal.Title className={styles.modalTitle}>
-            Can we expect to see you on our wedding day?
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className={styles.modalBody}>
+          Can we expect to see you on our wedding day?
+          <IconButton aria-label="close" onClick={handleClose} size="small">
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent className={styles.modalBody}>
           {result === "error" && (
             <Alert severity="error">
               Sorry, something went wrong! Please try again.
@@ -194,8 +206,11 @@ export const RsvpModal = ({
               </FormControl>
             </Box>
           </ThemeProvider>
-        </Modal.Body>
-        <Modal.Footer className={styles.modalFooter}>
+        </DialogContent>
+        <DialogActions
+          className={styles.modalFooter}
+          sx={{ justifyContent: "center" }}
+        >
           <button
             className="buttonStyle"
             onClick={() => handleRsvp(false)}
@@ -210,8 +225,8 @@ export const RsvpModal = ({
           >
             Will be there
           </button>
-        </Modal.Footer>
-      </Modal>
+        </DialogActions>
+      </Dialog>
       <Snackbar
         open={result === "success"}
         autoHideDuration={6000}

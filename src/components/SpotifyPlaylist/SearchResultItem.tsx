@@ -4,29 +4,42 @@ import Image from "next/image";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import app from "@/utils/firebase";
 import { useState } from "react";
+import type { PlaylistItem } from "@/utils/types";
 
 export const SearchResultItem = ({
   option,
+  checkPlaylist,
 }: {
   option: SpotifyApi.TrackObjectFull;
+  checkPlaylist: (id: string) => boolean;
 }) => {
   const [inPlaylist, setInPlaylist] = useState(false);
   const [loading, setLoading] = useState(false);
+  console.log("option", option);
   const addToPlaylist = async (track: SpotifyApi.TrackObjectFull) => {
     setLoading(true);
     const rsvpUser: { name: string } | null = JSON.parse(
       localStorage.getItem("rsvp") || "null"
     );
     const totalSuggestions = Number(localStorage.getItem("totalSuggestions"));
+    const isInPlaylist = checkPlaylist(track.external_urls.spotify);
+    if (isInPlaylist) {
+      setLoading(false);
+      return;
+    }
     if (totalSuggestions >= 5) {
       alert("You have reached the maximum number of suggestions.");
       setLoading(false);
       return;
     }
-    const data = {
+    const data: PlaylistItem = {
+      id: track.id,
       name: track.name,
       artist: track.artists.map((artist) => artist.name).join(", "),
-      url: track.external_urls.spotify,
+      albumArt: track.album?.images?.[0]?.url as string,
+      duration: track.duration_ms,
+      songUrl: track.external_urls.spotify,
+      artistUrl: track.artists?.[0]?.external_urls?.spotify as string,
       user: rsvpUser?.name ?? "unknown",
     };
     const message = {
@@ -39,7 +52,7 @@ export const SearchResultItem = ({
     };
     try {
       const db = getFirestore(app);
-      await addDoc(collection(db, "music"), data);
+      await addDoc(collection(db, "playlist"), data);
       await addDoc(collection(db, "messages"), message);
       localStorage.setItem("totalSuggestions", String(totalSuggestions + 1));
       setInPlaylist(true);

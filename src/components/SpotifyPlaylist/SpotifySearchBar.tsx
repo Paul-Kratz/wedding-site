@@ -5,7 +5,11 @@ import { RateLimit } from "async-sema";
 import { SearchResultItem } from "@/components/SpotifyPlaylist/SearchResultItem";
 const limit = RateLimit(2);
 
-export const SpotifySearchBar = () => {
+export const SpotifySearchBar = ({
+  checkPlaylist,
+}: {
+  checkPlaylist: (id: string) => boolean;
+}) => {
   const [results, setResults] = useState<SpotifyApi.TrackObjectFull[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,7 +68,12 @@ export const SpotifySearchBar = () => {
         getOptionLabel={() => ""}
         renderOption={(_, option: unknown) => {
           const typedOption = option as SpotifyApi.TrackObjectFull;
-          return <SearchResultItem option={typedOption} />;
+          return (
+            <SearchResultItem
+              option={typedOption}
+              checkPlaylist={checkPlaylist}
+            />
+          );
         }}
         renderInput={(params) => (
           <TextField

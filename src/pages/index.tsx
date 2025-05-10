@@ -7,14 +7,9 @@ import { FAQItems } from "@/components/FAQ/FAQItems";
 import { TimelineSection } from "@/components/Timeline/Timeline";
 import Head from "next/head";
 import { Venue } from "@/components/Venue/Venue";
-import { getSpotifyAccessToken, getSpotifyPlaylist } from "@/functions/spotify";
 import { SpotifyPlaylist } from "@/components/SpotifyPlaylist/SpotifyPlaylist";
 
-export default function Home({
-  playlist = {} as SpotifyApi.PlaylistObjectFull,
-}: {
-  playlist: SpotifyApi.PlaylistObjectFull;
-}) {
+export default function Home() {
   console.log(
     "%cStop looking at the console. It's not going to help you!",
     "color: #567356; font-size: 20px; font-weight: bold; font-family: 'Playfair Display', serif;"
@@ -78,20 +73,10 @@ export default function Home({
             title="Our Wedding Playlist"
             subtitle="We would love to hear your suggestions for our wedding playlist!"
           >
-            <SpotifyPlaylist playlist={playlist} />
+            <SpotifyPlaylist />
           </Section>
         </div>
       </div>
     </>
   );
 }
-
-export const getServerSideProps = async () => {
-  const accessToken = await getSpotifyAccessToken();
-  const playlist = await getSpotifyPlaylist({ accessToken });
-  return {
-    props: {
-      playlist,
-    },
-  };
-};

@@ -13,21 +13,52 @@ import { AccessTime } from "@mui/icons-material";
 import styles from "./SpotifyPlaylist.module.css";
 import Image from "next/image";
 import { SpotifySearchBar } from "@/components/SpotifyPlaylist/SpotifySearchBar";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import app from "@/utils/firebase";
+import { useState, useEffect } from "react";
+import type { PlaylistItem } from "@/utils/types";
+
 const formatDuration = (duration_ms: number) => {
   const minutes = Math.floor(duration_ms / 60000);
   const seconds = Math.floor((duration_ms % 60000) / 1000);
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
 
-export const SpotifyPlaylist = ({
-  playlist,
-}: {
-  playlist: SpotifyApi.PlaylistObjectFull;
-}) => {
+export const SpotifyPlaylist = () => {
+  const [playlist, setPlaylist] = useState<PlaylistItem[]>([]);
+  const db = getFirestore(app);
+
+  useEffect(() => {
+    const fetchPlaylist = async () => {
+      onSnapshot(collection(db, "playlist"), (snapshot) => {
+        const playlistData: PlaylistItem[] = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data() as PlaylistItem;
+          playlistData.push({
+            id: doc.id,
+            name: data.name,
+            artist: data.artist,
+            albumArt: data.albumArt,
+            duration: data.duration,
+            songUrl: data.songUrl,
+            artistUrl: data.artistUrl,
+            user: data.user,
+          });
+        });
+        playlistData.sort((a, b) => a.name.localeCompare(b.name));
+        setPlaylist(playlistData);
+      });
+    };
+    fetchPlaylist();
+  }, [db]);
+
+  const checkPlaylist = (id: string) => {
+    return playlist.some((song) => song.songUrl === id);
+  };
   return (
     <>
-      <SpotifySearchBar />
-      <TableContainer>
+      <SpotifySearchBar checkPlaylist={checkPlaylist} />
+      <TableContainer sx={{ maxHeight: 600 }}>
         <Table size="small">
           <TableHead>
             <TableRow>
@@ -45,9 +76,9 @@ export const SpotifyPlaylist = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {playlist?.tracks?.items.map((row, index) => (
+            {playlist?.map((song, index) => (
               <TableRow
-                key={row?.track?.id}
+                key={song?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row" size="small">
@@ -58,35 +89,30 @@ export const SpotifyPlaylist = ({
                 <TableCell>
                   <Box display={"flex"} flexDirection="row" alignItems="center">
                     <Image
-                      src={row?.track?.album?.images[0]?.url as string}
-                      alt={row?.track?.album?.name as string}
+                      src={song?.albumArt}
+                      alt={song?.name}
                       width={50}
                       height={50}
                     />
                     <Box ml={2}>
                       <Link
-                        href={row?.track?.external_urls?.spotify as string}
+                        href={song.songUrl}
                         target="_blank"
                         underline="hover"
                         style={{ textDecorationColor: "white" }}
                       >
                         <Typography className={styles.rowText}>
-                          {row?.track?.name}
+                          {song?.name}
                         </Typography>
                       </Link>
                       <Link
-                        href={
-                          row?.track?.artists?.[0]?.external_urls
-                            ?.spotify as string
-                        }
+                        href={song?.artistUrl}
                         target="_blank"
                         underline="hover"
                         style={{ textDecorationColor: "white" }}
                       >
                         <Typography className={styles.rowTextSmaller}>
-                          {row?.track?.artists
-                            ?.map((artist) => artist.name)
-                            .join(", ")}
+                          {song?.artist}
                         </Typography>
                       </Link>
                     </Box>
@@ -94,9 +120,7 @@ export const SpotifyPlaylist = ({
                 </TableCell>
                 <TableCell size="small" width={25}>
                   <Typography className={styles.rowText}>
-                    {row?.track?.duration_ms
-                      ? formatDuration(row?.track?.duration_ms)
-                      : "00:00"}{" "}
+                    {song?.duration ? formatDuration(song?.duration) : "00:00"}{" "}
                   </Typography>
                 </TableCell>
               </TableRow>
